@@ -8,14 +8,10 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def home(request):
-    # categorys=Question.objects.get(category=cat)
-    # posts=Question.objects.filter(category=categorys).count()
-    # posts=Question.objects.all().count()
+    current_user = request.user
     posts=Question.objects.all()
-    # solutions = Question.objects.filter(id=id).all()
-   
-    return render(request,'home.html',{'posts':posts ,"solutions":solutions})
-
+    solutions = Answer.objects.filter(id = current_user.id).first()
+    return render(request,'home.html',{'posts':posts,"solutions":solutions})
 
       
 def new_post(request):
@@ -35,20 +31,21 @@ def new_post(request):
 
 @login_required(login_url='/accounts/login')
 def post(request, id):
-    solutions = Question.objects.filter(id=id).all()
     current_user = request.user
+    question = Question.objects.filter(id=id).first()
+    profiles = Profile.objects.filter(user = current_user.id).first()
     if request.method == 'POST':
         form = AnswerForm(request.POST,request.FILES)
         if form.is_valid():
             answers = form.save(commit=False)
-            answers.user = current_user.profile
-            answers.question = solutions
+            answers.user = profiles
+            answers.question = question
             answers.save()
             return redirect('home')
     else:
         form = AnswerForm()
     title = "Question"
-    return render(request, 'answer.html',{"form":form} )
+    return render(request, 'answer.html',{"form":form, "id":id} )
 
 
 
