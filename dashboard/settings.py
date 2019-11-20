@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'dashboardapp',
+    'bootstrap3',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -79,8 +80,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'dashboard',
-        'USER': 'annick',
-    'PASSWORD':'escofavi',
+        'USER': 'wecode',
+    'PASSWORD':'12345',
     }
 }
 

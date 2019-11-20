@@ -57,7 +57,7 @@ class Profile(models.Model):
 
 class Answer(models.Model):
     user=models.ForeignKey(Profile)
-    question=models.ForeignKey(Question)
+    question=models.ForeignKey(Question, null=True, blank=True)
     answer=models.TextField()
     
 
