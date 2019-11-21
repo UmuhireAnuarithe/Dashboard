@@ -3,10 +3,32 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
-class Category(models.Model):
+# class Category(models.Model):
+#     categoryName=(
+#         ('HTML_CSS','HTML & CSS'),
+#         ('Others','Others'),
+#         ('Javascript','Javascript'),
+#         ('Angular','Angular'),
+#         ('Flask','Flask'),
+#         ('Django','Django'),
+#         ('Java','Java'),
+#         ('Android','Android'),
+#     )
+#     category=models.CharField(max_length=10,choices=categoryName)
+    # count=.count(category)
+
+    # def __str__(self):
+        # return self.category
+
+class Question(models.Model):
+    user=models.ForeignKey(User)
+    title=models.CharField(max_length=10)
+    content=models.TextField(blank=True)
+    snippet=models.ImageField(upload_to='question/',blank=True)
+    # category=models.ManyToManyField(Category)
     categoryName=(
-        ('HTML_CSS','HTML & CSS'),
-        ('Others','Others'),
+        ('HTML','HTML'),
+        ('CSS','CSS'),
         ('Javascript','Javascript'),
         ('Angular','Angular'),
         ('Flask','Flask'),
@@ -15,29 +37,7 @@ class Category(models.Model):
         ('Android','Android'),
     )
     category=models.CharField(max_length=10,choices=categoryName)
-    # count=.count(category)
-
-    def __str__(self):
-        return self.category
-
-class Question(models.Model):
-    user=models.ForeignKey(User)
-    title=models.CharField(max_length=10)
-    content=models.TextField(blank=True)
-    snippet=models.ImageField(upload_to='question/',blank=True)
-    # category=models.ManyToManyField(Category)
-    # categoryName=(
-    #     ('HTML','HTML'),
-    #     ('CSS','CSS'),
-    #     ('Javascript','Javascript'),
-    #     ('Angular','Angular'),
-    #     ('Flask','Flask'),
-    #     ('Django','Django'),
-    #     ('Java','Java'),
-    #     ('Android','Android'),
-    # )
-    # category=models.CharField(max_length=10,choices=categoryName)
-    category=models.ForeignKey(Category, null=True)
+    # category=models.ForeignKey(Category, null=True)
 
     @classmethod
     def get_all_questions(cls):
@@ -64,7 +64,7 @@ class Profile(models.Model):
         return self.user.username
 
 class Answer(models.Model):
-    user=models.ForeignKey(Profile)
+    user=models.ForeignKey(User)
     question=models.ForeignKey(Question, null=True, blank=True)
     answer=models.TextField()
     

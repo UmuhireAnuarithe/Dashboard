@@ -33,12 +33,12 @@ def new_post(request):
 def post(request, id):
     current_user = request.user
     question = Question.objects.filter(id=id).first()
-    profiles = Profile.objects.filter(user = current_user.id).first()
+    profile = Profile.objects.filter(user = current_user.id).first()
     if request.method == 'POST':
         form = AnswerForm(request.POST,request.FILES)
         if form.is_valid():
             answers = form.save(commit=False)
-            answers.user = profiles
+            answers.user = current_user
             answers.question = question
             answers.save()
             return redirect('home')
