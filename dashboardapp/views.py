@@ -48,7 +48,7 @@ def post(request, id):
     return render(request, 'answer.html',{"form":form, "id":id} )
 
 
-def new_profile(request):
+def new_profile(request):_
     current_user = request.user
     if request.method == 'POST':
         if Profile.objects.filter(user_id=current_user).exists():
