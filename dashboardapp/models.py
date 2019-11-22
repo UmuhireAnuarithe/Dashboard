@@ -59,6 +59,9 @@ class Profile(models.Model):
     user=models.OneToOneField(User,on_delete=models.CASCADE)
     image=models.ImageField(upload_to='profile/')
     email=models.EmailField(blank=True)
+    facebook_page = models.URLField(blank=True)
+    twitter_link = models .URLField(blank=True)
+    instagra_link  = models.URLField(blank=True) 
 
     def __str__(self):
         return self.user.username
@@ -67,6 +70,7 @@ class Answer(models.Model):
     user=models.ForeignKey(User)
     question=models.ForeignKey(Question, null=True, blank=True)
     answer=models.TextField()
+    likes= models.IntegerField(default=0)
     
 
     def __str__(self):
